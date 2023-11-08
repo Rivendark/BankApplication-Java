@@ -3,27 +3,32 @@ package com.bankapplication.domain.models;
 import java.util.UUID;
 
 public class User {
-    private final UUID CorrelationId;
     private final UUID Id;
-    private final String FirstName;
-    private final String LastName;
-    private final String Email;
-
-    private User(UUID correlationId, UUID id, String firstName, String lastName, String email) {
-        CorrelationId = correlationId;
+    private String FirstName;
+    private String LastName;
+    private String Email;
+    private User(UUID id, String firstName, String lastName, String email) {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
     }
 
-    public User create(UUID correlationId, UUID id, String firstName, String lastName, String email)
+    public static User create(UUID id, String firstName, String lastName, String email)
     {
-        return new User(correlationId, id, firstName, lastName, email);
+        return new User(id, firstName, lastName, email);
     }
 
-    public UUID getCorrelationId() {
-        return CorrelationId;
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        LastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
 
     public UUID getId() {
