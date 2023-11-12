@@ -23,6 +23,7 @@ public class CreateUserCommand {
     @JsonProperty("Email")
     @Email
     private String email;
+
     public CreateUserCommand(@NonNull UUID correlationId, @NonNull String firstName, @NonNull String lastName, String email) {
         this.correlationId = correlationId;
         this.firstName = firstName;

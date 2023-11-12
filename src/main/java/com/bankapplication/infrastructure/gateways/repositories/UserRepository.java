@@ -1,20 +1,22 @@
 package com.bankapplication.infrastructure.gateways.repositories;
 
 import com.bankapplication.application.contexts.IDbContext;
-import com.bankapplication.application.services.IUserService;
+import com.bankapplication.application.services.IUserRepository;
 import com.bankapplication.domain.models.User;
 import com.bankapplication.infrastructure.gateways.mapper.UserJpaMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service("userService")
-public class UserService implements IUserService {
+public class UserRepository implements IUserRepository {
 
     private final IDbContext context;
 
-    public UserService(IDbContext context) {
+    public UserRepository(IDbContext context) {
         this.context = context;
     }
 
@@ -46,6 +48,16 @@ public class UserService implements IUserService {
     public User getUser(UUID userId)
     {
         return populateUserData(context.GetUsers().findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found")));
+    }
+
+    public List<User> getUsers()
+    {
+        List<User> users = new ArrayList<>();
+        var usersJpa = context.GetUsers().findAll();
+        for (UserJpaMapper user : usersJpa)
+            users.add(populateUserData(user));
+
+        return users;
     }
 
     private User populateUserData(UserJpaMapper mapper)
